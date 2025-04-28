@@ -1,135 +1,126 @@
-import React, { useState } from 'react';
-import { Space, Table, Tag } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import { Input, Button } from 'antd';
-import { useDrag, useDrop } from 'react-dnd';
+import React, { useState, useEffect } from 'react';
+import { Table, Form, Input, Select, Button } from 'antd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { UserOutlined, TeamOutlined, EnvironmentOutlined } from '@ant-design/icons';
+import DraggableCard, { ITEM_TYPE } from './DraggableCard';
 
-// Table columns configuration
-const columns = [
-  { title: 'Sunday', dataIndex: 'Sunday', key: 'Sunday', render: (text) => <a>{text}</a> },
-  { title: 'Monday', dataIndex: 'Monday', key: 'Monday' },
-  { title: 'Tuesday', dataIndex: 'Tuesday', key: 'Tuesday' },
-  { title: 'Wednesday', key: 'Wednesday', dataIndex: 'Wednesday', render: (_, { tags }) => (
-    <>
-      {tags.map((tag) => {
-        let color = tag.length > 5 ? 'geekblue' : 'green';
-        if (tag === 'loser') color = 'volcano';
-        return <Tag color={color} key={tag}>{tag.toUpperCase()}</Tag>;
-      })}
-    </>
-  ) },
-  {
-    title: 'Thursday',
-    key: 'Thursday',
-    render: () => <></>, // Empty rendering for Thursday as delete logic is handled in DraggableRow
-  },
-  {
-    title: 'Friday',
-    key: 'Friday',
-    render: () => <></>, // Empty rendering for Friday
-  },
-  {
-    title: 'Saturday',
-    key: 'Saturday',
-    render: () => <></>, // Empty rendering for Saturday
-  },
-];
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-// DraggableRow component
-const DraggableRow = ({ index, moveRow, handleDelete, ...restProps }) => {
-  const [, drag] = useDrag({
-    type: 'row',
-    item: { index },
+export default function Scheduler() {
+  const [form] = Form.useForm();
+  const [data, setData] = useState(() => {
+    const saved = localStorage.getItem('classSchedulerData');
+    if (saved) return JSON.parse(saved);
+    return Array.from({ length: 7 }, (_, row) => {
+      const rowData = { key: row };
+      DAYS.forEach((d) => {
+        rowData[d] = { name: '—', teacher: '', location: '' };
+      });
+      return rowData;
+    });
   });
 
-  const [, drop] = useDrop({
-    accept: 'row',
-    hover: (item) => {
-      if (item.index !== index) {
-        moveRow(item.index, index);
-        item.index = index;
-      }
-    },
-  });
-
-  return (
-    <tr ref={(node) => drag(drop(node))} {...restProps}>
-      <td>
-        <Space size="middle">
-          <a onClick={() => handleDelete(index)}>Delete</a>
-        </Space>
-      </td>
-    </tr>
-  );
-};
-
-function ClassTable() {
-  const [data, setData] = useState([
-    { key: '1', name: 'John Brown', age: 32, address: 'New York No. 1 Lake Park', tags: ['nice', 'developer'] },
-    { key: '2', name: 'Jim Green', age: 42, address: 'London No. 1 Lake Park', tags: ['loser'] },
-    { key: '3', name: 'Joe Black', age: 32, address: 'Sydney No. 1 Lake Park', tags: ['cool', 'teacher'] },
-  ]);
-
-  const [inputValue, setInputValue] = useState('');
-
-  const handleDelete = (index) => {
-    const newData = data.filter((_, idx) => idx !== index); 
-    setData(newData); 
-  };
+  useEffect(() => {
+    localStorage.setItem('classSchedulerData', JSON.stringify(data));
+  }, [data]);
 
   const handleAddCourse = () => {
-    if (inputValue) {
-      const newCourse = {
-        key: Date.now().toString(), 
-        name: inputValue,
-        age: Math.floor(Math.random() * 50),
-        address: 'Random Address', 
-        tags: ['new'], 
-      };
-      setData([...data, newCourse]); 
-      setInputValue(''); 
-    }
+    form
+      .validateFields()
+      .then(({ name, teacher, location, day }) => {
+        const rowIdx = data.findIndex((r) => r[day].name === '—');
+        if (rowIdx === -1) {
+          alert('该天没有空余时间！');
+          return;
+        }
+        const updated = [...data];
+        updated[rowIdx] = {
+          ...updated[rowIdx],
+          [day]: { name, teacher, location },
+        };
+        setData(updated);
+      })
+      .catch((info) => {
+        console.log('Validate Failed:', info);
+      });
   };
 
-  const moveRow = (dragIndex, hoverIndex) => {
-    const draggedRow = data[dragIndex];
-    const updatedData = data.filter((_, idx) => idx !== dragIndex); 
-    updatedData.splice(hoverIndex, 0, draggedRow); 
-    setData(updatedData); 
+  const moveCard = (sourceDay, sourceRow, targetDay, targetRow) => {
+    const updated = [...data];
+    const srcKey = DAYS[sourceDay];
+    const tgtKey = DAYS[targetDay];
+    const sourceLesson = updated[sourceRow][srcKey];
+    if (updated[targetRow][tgtKey].name !== '—') return;
+    updated[sourceRow] = {
+      ...updated[sourceRow],
+      [srcKey]: { name: '—', teacher: '', location: '' },
+    };
+    updated[targetRow] = {
+      ...updated[targetRow],
+      [tgtKey]: sourceLesson,
+    };
+    setData(updated);
   };
+
+  const removeCard = (dayIndex, rowIndex) => {
+    const updated = [...data];
+    const key = DAYS[dayIndex];
+    updated[rowIndex] = {
+      ...updated[rowIndex],
+      [key]: { name: '—', teacher: '', location: '' },
+    };
+    setData(updated);
+  };
+
+  const columns = DAYS.map((day) => ({
+    title: day,
+    dataIndex: day,
+    key: day,
+    render: (lesson, record, rowIndex) => (
+      <DraggableCard
+        lesson={lesson}
+        day={DAYS.indexOf(day)}
+        rowIndex={rowIndex}
+        moveCard={moveCard}
+        removeCard={removeCard}
+      />
+    ),
+  }));
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div>
-        <h1>Class Table</h1>
+      <div style={{ padding: 16 }}>
+        <h1>Class Scheduler</h1>
+        <Form form={form} layout="inline" style={{ marginBottom: 16 }}>
+          <Form.Item name="name" rules={[{ required: true, message: '请输入课程名称' }]}>
+            <Input placeholder="Course name" prefix={<UserOutlined />} allowClear />
+          </Form.Item>
+          <Form.Item name="teacher">
+            <Input placeholder="Teacher" prefix={<TeamOutlined />} allowClear />
+          </Form.Item>
+          <Form.Item name="location">
+            <Input placeholder="Location" prefix={<EnvironmentOutlined />} allowClear />
+          </Form.Item>
+          <Form.Item name="day" rules={[{ required: true, message: '请选择星期' }]}>
+            <Select placeholder="Select day" style={{ width: 140 }} options={DAYS.map((d) => ({ value: d, label: d }))} />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" onClick={handleAddCourse}>
+              Add Course
+            </Button>
+          </Form.Item>
+        </Form>
         <Table
-          columns={columns}
           dataSource={data}
+          columns={columns}
           rowKey="key"
-          components={{
-            body: {
-              row: ({ index, ...restProps }) => {
-                return <DraggableRow index={index} moveRow={moveRow} handleDelete={handleDelete} {...restProps} />;
-              },
-            },
-          }}
+          pagination={false}
+          bordered
+          scroll={{ x: 'max-content' }}
+          style={{ userSelect: 'none' }}
         />
-      </div>
-      <div>
-        <Input
-          size="large"
-          placeholder="Enter course name"
-          prefix={<UserOutlined />}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-        <br />
-        <Button onClick={handleAddCourse}>Add Course</Button>
       </div>
     </DndProvider>
   );
 }
-
-export default ClassTable;
