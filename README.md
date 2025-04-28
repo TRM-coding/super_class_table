@@ -43,7 +43,7 @@
 ## 截图
 
 - 搜索页面  
-  ![搜索页面](assets/search.png)
+  ![搜索页面](./search.png)
 
 - 课程表页面  
-  ![课程表页面](assets/scheduler.png)
+  ![课程表页面](./scheduler.png)
