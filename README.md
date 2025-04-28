@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# Class Scheduler
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 功能介绍
+- 可通过表单输入课程名称、教师、地点，并选择星期添加课程
+- 支持在课程表中拖拽课程卡片，实现调整课程顺序
+- 在卡片右上角点击删除按钮，可删除对应课程
+- 所有课程数据会自动保存到本地 `localStorage`，刷新或重启浏览器后仍然保留
 
-## Available Scripts
+## 异常情况 & 边界处理
+- 添加课程时若所选天所有时段已占用，会弹出提示：`该天没有空余时间！`
+- 拖拽至已被占用的格子时会取消操作，保持原有顺序
+- 拖拽过程中禁止默认浏览器拖拽预览，确保交互流畅
+- 表单校验
+  - 课程名称为必填
+  - 星期必须选择
+- 界面尺寸自适应，高度超出自动滚动，不会破坏布局
 
-In the project directory, you can run:
+## 使用方式
+1. 克隆仓库并进入项目目录  
+   ```bash
+   git clone <repo-url>
+   cd class_table/class_table
+   ```
+2. 安装依赖  
+   ```bash
+   npm install
+   ```
+3. 启动开发服务器  
+   ```bash
+   npm start
+   ```  
+   打开浏览器访问 http://localhost:3000
+4. 在表单中填写课程信息并选择星期，点击 **Add Course**  
+5. 在课程表中拖拽调整位置，或点击卡片右上角删除课程  
+6. 数据会自动保存在本地，刷新页面后仍可查看  
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---

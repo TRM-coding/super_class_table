@@ -1,0 +1,75 @@
+.search-page {
+  /* 渐变背景代替纯色，提高活力与现代感 */
+  background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+  padding: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;      /* 视口高度，确保填满屏幕 */
+}
+.search-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.search-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  /* 半透明白底卡片式设计 */
+  background: rgba(255, 255, 255, 0.8);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.search-input {
+  width: 300px;
+  border-radius: 24px;
+}
+.day-select {
+  width: 160px;
+}
+.search-btn {
+  background: linear-gradient(135deg, #8fc1e3, #b3d4fc);
+  border: none;
+  color: #fff;
+  border-radius: 20px;
+  padding: 0 20px;
+  height: 40px;
+  transition: background 0.3s;
+}
+.search-btn:hover {
+  background: linear-gradient(135deg, #b3d4fc, #8fc1e3);
+}
+.tables-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  /* 表格区统一白色卡片背景 */
+  background: rgba(255, 255, 255, 0.9);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  flex: 1;                /* 填充剩余空间，防止底部留白 */
+}
+.search-table {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+.ant-table-thead > tr > th {
+  background: #e9f1fa;
+  color: #555;
+  font-weight: 500;
+}
+.ant-table-tbody > tr > td {
+  background: #fff;
+  color: #444;
+}
+.ant-empty-description {
+  color: #999;
+}
