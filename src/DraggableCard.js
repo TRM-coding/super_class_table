@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import './DraggableCard.css';
 import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import { Card } from 'antd';
@@ -46,17 +47,12 @@ export default function DraggableCard({ lesson, day, rowIndex, moveCard, removeC
     <div
       ref={ref}
       onDragOver={e => e.preventDefault()}
-      style={{
-        opacity: isDragging ? 0.5 : 1,
-        cursor: 'move',
-        minHeight: 80,
-        border: isEmpty ? '1px dashed #ccc' : 'none',
-      }}
+      className="draggable-card"
     >
       {!isEmpty && (
         <Card
           size="small"
-          style={{ width: '100%' }}
+          className="lesson-card"
           extra={
             <DeleteOutlined
               onClick={e => {

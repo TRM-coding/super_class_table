@@ -1,0 +1,36 @@
+.draggable-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.draggable-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,229,255,0.5);
+}
+
+.lesson-card {
+  background: #252545;
+  border: none;
+  border-radius: 6px;
+  box-shadow: inset 0 0 6px rgba(0,229,255,0.2);
+  color: #f0f0ff;
+}
+
+.lesson-card .ant-card-body {
+  padding: 12px 16px;
+}
+
+.lesson-card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.lesson-card .anticon-delete {
+  color: #ff6b6b;
+  font-size: 16px;
+}
+
+.lesson-card .anticon-delete:hover {
+  color: #ff0000;
+}

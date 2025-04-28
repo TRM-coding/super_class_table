@@ -1,0 +1,44 @@
+.scheduler-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 24px;
+  background: #0f0f1a;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.scheduler-title {
+  margin-bottom: 16px;
+  color: #00e5ff;
+  font-family: 'Segoe UI', sans-serif;
+  text-shadow: 1px 1px 4px rgba(0,229,255,0.7);
+}
+
+.scheduler-table .ant-table {
+  background: transparent;
+}
+
+.scheduler-table .ant-table-thead > tr > th {
+  background: #1a1a2e;
+  color: #e0e0ff;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 2px solid #00e5ff;
+}
+
+.scheduler-table .ant-table-tbody > tr > td {
+  background: #161627;
+  padding: 8px;
+  border-bottom: 1px solid #333;
+}
+
+.scheduler-table .ant-table-tbody > tr:hover > td {
+  background: #1e1e3f;
+}
+
+.scheduler-table .ant-table-tbody > tr > td:first-child,
+.scheduler-table .ant-table-thead > tr > th:first-child {
+  background: #22223b;
+  font-weight: 500;
+  color: #c0c0ff;
+}

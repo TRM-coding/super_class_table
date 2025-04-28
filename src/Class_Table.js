@@ -4,6 +4,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { UserOutlined, TeamOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import DraggableCard, { ITEM_TYPE } from './DraggableCard';
+import './Class_Table.css';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -73,25 +74,32 @@ export default function Scheduler() {
     setData(updated);
   };
 
-  const columns = DAYS.map((day) => ({
-    title: day,
-    dataIndex: day,
-    key: day,
-    render: (lesson, record, rowIndex) => (
-      <DraggableCard
-        lesson={lesson}
-        day={DAYS.indexOf(day)}
-        rowIndex={rowIndex}
-        moveCard={moveCard}
-        removeCard={removeCard}
-      />
-    ),
-  }));
+  const columns = [
+    {
+      title: '节次',
+      key: 'period',
+      render: (_, __, rowIndex) => `第${rowIndex + 1}节课`,
+    },
+    ...DAYS.map((day) => ({
+      title: day,
+      dataIndex: day,
+      key: day,
+      render: (lesson, record, rowIndex) => (
+        <DraggableCard
+          lesson={lesson}
+          day={DAYS.indexOf(day)}
+          rowIndex={rowIndex}
+          moveCard={moveCard}
+          removeCard={removeCard}
+        />
+      ),
+    })),
+  ];
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div style={{ padding: 16 }}>
-        <h1>Class Scheduler</h1>
+      <div className="scheduler-container">
+        <h1 className="scheduler-title">Class Scheduler</h1>
         <Form form={form} layout="inline" style={{ marginBottom: 16 }}>
           <Form.Item name="name" rules={[{ required: true, message: '请输入课程名称' }]}>
             <Input placeholder="Course name" prefix={<UserOutlined />} allowClear />
@@ -112,6 +120,7 @@ export default function Scheduler() {
           </Form.Item>
         </Form>
         <Table
+          className="scheduler-table"
           dataSource={data}
           columns={columns}
           rowKey="key"
