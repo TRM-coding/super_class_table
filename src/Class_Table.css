@@ -1,10 +1,23 @@
+/* 让根节点撑满全屏 */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
 .scheduler-container {
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;           /* 撑满视口 */
+  width: 100%;
+  padding: 20px;
   background: #0f0f1a;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  box-sizing: border-box;
+}
+
+.table-container {
+  flex: 1;                 /* 填满剩余 */
+  overflow: auto;          /* 内容超出时滚动 */
+  margin-top: 16px;
 }
 
 .scheduler-title {

@@ -119,16 +119,18 @@ export default function Scheduler() {
             </Button>
           </Form.Item>
         </Form>
-        <Table
-          className="scheduler-table"
-          dataSource={data}
-          columns={columns}
-          rowKey="key"
-          pagination={false}
-          bordered
-          scroll={{ x: 'max-content' }}
-          style={{ userSelect: 'none' }}
-        />
+        <div className="table-container">
+          <Table
+            className="scheduler-table"
+            dataSource={data}
+            columns={columns}
+            rowKey="key"
+            pagination={false}
+            bordered
+            scroll={{ x: 'max-content' }}
+            style={{ userSelect: 'none' }}
+          />
+        </div>
       </div>
     </DndProvider>
   );

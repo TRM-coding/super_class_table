@@ -2,11 +2,17 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-radius: 8px;
   overflow: hidden;
+  cursor: move;        /* 恢复拖拽光标 */
+  min-height: 80px;    /* 恢复单元格高度 */
 }
 
 .draggable-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 16px rgba(0,229,255,0.5);
+}
+
+.draggable-card.empty {
+  border: 1px dashed #ccc;  /* 空位边框 */
 }
 
 .lesson-card {

@@ -47,7 +47,8 @@ export default function DraggableCard({ lesson, day, rowIndex, moveCard, removeC
     <div
       ref={ref}
       onDragOver={e => e.preventDefault()}
-      className="draggable-card"
+      className={`draggable-card${isEmpty ? ' empty' : ''}`}
+      style={{ opacity: isDragging ? 0.5 : 1 }}
     >
       {!isEmpty && (
         <Card
