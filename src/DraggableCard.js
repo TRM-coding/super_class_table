@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import './DraggableCard.css';
 import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
@@ -9,17 +9,15 @@ export const ITEM_TYPE = 'CARD';
 
 export default function DraggableCard({ lesson, day, rowIndex, moveCard, removeCard }) {
   const ref = useRef(null);
-  const [dragging, setDragging] = useState(false);
 
   const [{ isDragging }, drag, preview] = useDrag(
     () => ({
       type: ITEM_TYPE,
       item: () => ({ day, rowIndex }),
       collect: monitor => {
-        setDragging(monitor.isDragging());
         return { isDragging: monitor.isDragging() };
       },
-      end: () => setDragging(false),
+      end: () => {},
     }),
     [day, rowIndex]
   );

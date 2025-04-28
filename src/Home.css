@@ -1,0 +1,71 @@
+.home-container {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #f8f4e6;        /* 米黄色底色 */
+  font-family: 'Noto Serif SC', 'STKaiti', serif;
+  color: #3b2e1a;             /* 深棕文字 */
+}
+
+.home-header {
+  background: linear-gradient(135deg, #e0d4b7 0%, #fdfaf6 100%); /* 中式浅玉与米色渐变 */
+  padding: 1.5rem;
+  border: 4px solid #c29465;   /* 金色边框 */
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 提升层次感 */
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.home-title {
+  font-size: 2.5rem;
+  color: #8a2c2c;             /* 徽红色 */
+  margin: 0;
+}
+
+.home-subtitle {
+  font-size: 1.2rem;
+  color: #5b4437;
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+/* 导航按钮容器 */
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+/* 按钮样式 */
+.nav-button {
+  background-color: #c29465;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.nav-button:hover {
+  background-color: #a8773b;
+}
+
+.fancy-btn {
+  background: linear-gradient(45deg, #d4af37, #ffd700);
+  border: none;
+  color: #fff !important;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.9), 0 4px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.fancy-btn:hover, .fancy-btn:focus {
+  background: linear-gradient(45deg, #ffd700, #ffe86f);
+  box-shadow: 0 0 16px rgba(255, 223, 0, 1), 0 6px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px) scale(1.02);
+}

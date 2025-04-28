@@ -3,7 +3,7 @@ import { Table, Form, Input, Select, Button } from 'antd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { UserOutlined, TeamOutlined, EnvironmentOutlined } from '@ant-design/icons';
-import DraggableCard, { ITEM_TYPE } from './DraggableCard';
+import DraggableCard from './DraggableCard';
 import './Class_Table.css';
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
