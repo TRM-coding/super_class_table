@@ -55,3 +55,9 @@ html, body, #root {
   font-weight: 500;
   color: #c0c0ff;
 }
+
+/* 拖拽目标接收高亮 */
+.drop-highlight {
+  box-shadow: 0 0 12px 4px rgba(255, 215, 0, 0.8);
+  transition: box-shadow 0.2s;
+}

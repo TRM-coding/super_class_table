@@ -26,7 +26,7 @@ export default function DraggableCard({ lesson, day, rowIndex, moveCard, removeC
     preview(getEmptyImage(), { captureDraggingState: true });
   }, [preview]);
 
-  const [, drop] = useDrop(
+  const [{ isOver, canDrop }, drop] = useDrop(
     () => ({
       accept: ITEM_TYPE,
       drop: item => {
@@ -34,9 +34,15 @@ export default function DraggableCard({ lesson, day, rowIndex, moveCard, removeC
           moveCard(item.day, item.rowIndex, day, rowIndex);
         }
       },
+      collect: monitor => ({
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop()
+      })
     }),
     [day, rowIndex, moveCard]
   );
+
+  const isActive = isOver && canDrop;
 
   drag(drop(ref));
 
@@ -45,7 +51,7 @@ export default function DraggableCard({ lesson, day, rowIndex, moveCard, removeC
     <div
       ref={ref}
       onDragOver={e => e.preventDefault()}
-      className={`draggable-card${isEmpty ? ' empty' : ''}`}
+      className={`draggable-card${isEmpty ? ' empty' : ''}${isActive ? ' drop-highlight' : ''}`}
       style={{ opacity: isDragging ? 0.5 : 1 }}
     >
       {!isEmpty && (
